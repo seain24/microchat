@@ -1,0 +1,25 @@
+client:
+  ip: 0.0.0.0
+  port: 20000
+
+monitor:
+  ip: 0.0.0.0
+  port: 8888
+  token: 123
+
+http:
+  ip: 0.0.0.0
+  port: 12345
+
+log:
+  level: info
+  filepath: ./logs
+  filename: chatserver.log
+
+database:
+  host: 127.0.0.1
+  port: 3306
+  uname: root
+  password: 123456
+  dbname: mircochat
+  timeout: 5s
