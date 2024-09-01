@@ -1,7 +1,7 @@
 use actix_web::{get, HttpResponse};
 use actix_web::web::ServiceConfig;
 
-pub fn register(cfg: &mut ServiceConfig) {
+pub fn config(cfg: &mut ServiceConfig) {
     cfg.service(health);
 }
 
@@ -9,3 +9,5 @@ pub fn register(cfg: &mut ServiceConfig) {
 async fn health() -> HttpResponse {
     HttpResponse::Ok().json("hahha")
 }
+
+

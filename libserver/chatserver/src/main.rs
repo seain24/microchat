@@ -6,7 +6,7 @@ use actix_web::{get, web, App, HttpResponse, HttpServer};
 use clap::Parser;
 use micro_chat_server::base::app_state;
 use micro_chat_server::error::Result;
-use micro_chat_server::{base, transport, Error};
+use micro_chat_server::{base, interface, service, Error};
 
 #[derive(Parser, Debug, Clone)]
 #[command(author, version, about)]
@@ -33,6 +33,7 @@ async fn main() -> Result<()> {
     // database connection
     let conn = base::singleton::db::DbPool::get_instance(cfg_.clone()).await?;
     let app_state = web::Data::new(app_state::AppState::new(cfg_, conn));
+    let user_svc = service::user_mgr::UserManager::new(cfg);
     let _ = HttpServer::new(move || {
         let cors = Cors::default()
             .allow_any_header()
@@ -44,7 +45,8 @@ async fn main() -> Result<()> {
             .app_data(app_state.clone())
             .service(init)
             .configure(|cfg| {
-                transport::api::register(cfg);
+                interface::api::config(cfg);
+                interface::user_mgr::config(cfg, user_svc.clone());
             })
     })
     .workers(4)

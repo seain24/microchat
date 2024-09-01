@@ -10,13 +10,16 @@ actix = "0.13.5"
 actix-cors = "0.7.0"
 actix-web = "4.9.0"
 actix-web-actors = "4.3.1"
+async-trait.workspace = true
+
+bytes.workspace = true
 clap = { workspace = true, features = ["derive"] }
 config = { version = "0.14.0", features = ["yaml"] }
 humantime-serde.workspace = true
+mime.workspace = true
 once_cell.workspace = true
+protobuf.workspace = true
 sea-orm = { workspace = true, features = ["sqlx-mysql", "runtime-tokio-rustls"] }
-
-
 serde.workspace = true
 serde_json.workspace = true
 serde_with.workspace = true
@@ -26,3 +29,6 @@ tokio.workspace = true
 tracing.workspace = true
 tracing-appender.workspace = true
 tracing-subscriber = { workspace = true, features = ["time", "chrono", "local-time", "env-filter"] }
+
+[build-dependencies]
+protobuf-codegen = "3.5.1"

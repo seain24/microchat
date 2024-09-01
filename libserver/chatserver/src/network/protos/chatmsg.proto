@@ -1,0 +1,117 @@
+syntax = "proto3";
+package microchat;
+
+
+// 消息类型
+enum MsgType {
+  UNKNOWN = 0;
+  HEARTBEAT = 1;                 //心跳包
+  REGISTER = 2;                  //注册
+  LOGIN = 3;                     //登陆
+  GET_OFRIEND_LIST = 4;          //获取好友列表
+  FIND_USER = 5;                 //查找用户
+  OPERATE_FRIEND = 6;            //添加、删除等好友操作
+  USER_STATUS_CHANGE = 7;        //用户信息改变通知
+  UPDATE_USER_INFO = 8;          //更新用户信息
+  MODIFY_PASSWORD = 9;           //修改登陆密码
+  CREATE_GROUP = 10;             //创建群组
+  GET_GROUP_MEMBERS = 11;        //获取群组成员列表
+  CHAT = 50;                     //单聊消息
+  MULTI_CHAT = 51;                //群发消息
+  KICK_USER = 52;                 //被踢下线
+  REMOTE_DESKTOP = 53;            //远程桌面
+  UPDATE_TEAM_INFO = 54;          //更新用户好友分组信息
+  MODIFY_FRIEND_MARKNAME = 55;    //更新好友备注信息
+  MOVE_FRIEND_TO_OTHER_TEAM = 56;  //移动好友至
+}
+
+
+// 设备类型
+enum DeviceType {
+  WINDOWS = 0;    // windows
+  LINUX = 1;      // linux
+  MAC = 2;        // mac
+  ANDROID = 3;    // android
+  IOS = 4;        // ios
+  IPAD = 5;       // ipad
+}
+
+// 在线状态
+enum OnlineStatus {
+  OFFLINE = 0;  // 离线
+  INVISIBLE = 1; // 隐身
+  WIFI = 2;     // wifi在线
+  CELLULAR = 3; // 3g/4g/5g在线
+}
+
+
+// 在线类型
+message OnlineType {
+  DeviceType device = 1;
+  OnlineStatus status = 2;
+}
+
+/// 协议头
+message Header {
+  bool compress = 1;        // 是否启用压缩
+  int32 origin_size = 2;    //包体压缩前大小
+  int32 compress_size = 3;  //包体压缩后大小
+  optional string reserved = 4;
+}
+
+
+// 操作类型
+// 1：发出加好友申请
+// 2：收到加好友请求(仅客户端使用)
+// 3：应答加好友
+// 4：删除好友请求
+// 5：应答删除好友
+// 当type=3时，accept是必须字段，0：对方拒绝，1：对方接受
+enum FriendOperationType {
+  OPERATION_UNKNOWN = 0;
+  //发送加好友申请
+  SEND_ADD_APPLY = 1;
+  //接收到加好友申请(仅客户端使用)
+  RECV_ADD_APPLY = 2;
+  //应答加好友申请
+  REPLY_ADD_APPLY = 3;
+  //删除好友申请
+  SEND_DELETE_APPLY = 4;
+  //应答删好友申请
+  RECV_DELETE_APPLY = 5;
+}
+
+enum friendOperationApplyType {
+  APPLY_UNKNOWN = 0;
+  //拒绝加好友
+  APPLY_REFUSED = 1;
+  //接受加好友
+  APPLY_ACCEPTED = 2;
+}
+
+enum GroupOperationType {
+  GROUP_OPERATION_UNKNOWN = 0;
+  //新增分组
+  GROUP_OPERATION_ADD = 1;
+  //删除分组
+  GROUP_OPERATION_DELETE = 2;
+  //修改分组
+  GROUP_OPERATION_MODIFY = 3;
+}
+
+enum ErrorCode {
+  ERR_UNKNOWN = 0;
+  ERR_OK = 1;
+  ERR_NOT_LOGIN = 2;
+  ERR_REG_FAIL = 100;
+  ERR_REG_ALREADY = 101;
+  ERR_NOT_REG = 102;
+  ERR_INVALID_PSW = 103;
+  ERR_UPD_USERINFO_FAIL = 104;
+  ERR_MODIFY_PSW_FAIL = 105;
+  ERR_CRE_GROUP_FAIL = 106;
+  ERR_TOO_OLD_VER = 107;
+  ERR_MODIFY_MARKNAME_FAIL = 108;
+  ERR_GROUPNAME_EXIST = 109; //分组已经存在
+}
+

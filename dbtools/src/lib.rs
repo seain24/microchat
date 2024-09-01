@@ -3,7 +3,7 @@ use sea_orm_migration::*;
 mod m_01_create_user;
 mod m_02_create_user_relationship;
 mod m_03_create_chatmsg;
-mod utils;
+// mod utils;
 
 pub struct Migrator;
 
