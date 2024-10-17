@@ -1,34 +1,45 @@
 [package]
-name = "micro-chat-server"
+name = "chatserver"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-actix = "0.13.5"
-actix-cors = "0.7.0"
-actix-web = "4.9.0"
-actix-web-actors = "4.3.1"
+actix.workspace = true
+actix-cors.workspace = true
+actix-web.workspace = true
+actix-web-actors.workspace = true
+anyhow.workspace = true
 async-trait.workspace = true
-
+async_once.workspace = true
 bytes.workspace = true
+chrono.workspace = true
 clap = { workspace = true, features = ["derive"] }
 config = { version = "0.14.0", features = ["yaml"] }
+fred.workspace = true
 humantime-serde.workspace = true
+library = { version = "0.1.0", path = "../library" }
 mime.workspace = true
 once_cell.workspace = true
 protobuf.workspace = true
-sea-orm = { workspace = true, features = ["sqlx-mysql", "runtime-tokio-rustls"] }
+regex = "1.10.6"
+sea-orm = { workspace = true, features = ["sqlx-mysql", "runtime-tokio-rustls", "macros"] }
 serde.workspace = true
 serde_json.workspace = true
 serde_with.workspace = true
+shaku.workspace = true
+
+task-local-extensions = "0.1.4"
 thiserror.workspace = true
 time = { workspace = true, features = ["macros", "serde"] }
 tokio.workspace = true
 tracing.workspace = true
 tracing-appender.workspace = true
 tracing-subscriber = { workspace = true, features = ["time", "chrono", "local-time", "env-filter"] }
+uuid = { workspace = true, features = ["serde", "v4", "macro-diagnostics", "fast-rng"] }
+validator = { version = "0.18.1", features = ["derive"] }
+
 
 [build-dependencies]
 protobuf-codegen = "3.5.1"

@@ -1,0 +1,39 @@
+syntax = "proto3";
+package microchat.user;
+import "chatmsg.proto";
+
+
+enum Gender {
+  Male = 0;
+  Female = 1;
+  Unknown = 2;
+}
+
+message RegisterRequest {
+  string username = 1;
+  string nickname = 2;
+  string mobile = 3;
+  string password = 4;
+  Gender gender = 5;
+}
+
+// 常规登录
+message CustomLogin {
+  string username = 1;
+  string password = 2;
+}
+
+// 手机号登录
+message MobileLogin {
+  string mobile = 1;
+  uint32 code = 2;
+}
+
+message LoginRequest {
+  oneof login_type {
+    CustomLogin custom = 1;
+    MobileLogin mobile = 2;
+  }
+  microchat.msg.ClientType client_type = 3;
+  microchat.msg.OnlineStatus status = 4;
+}

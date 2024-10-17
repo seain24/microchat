@@ -1,5 +1,5 @@
 syntax = "proto3";
-package microchat;
+package microchat.msg;
 
 
 // 消息类型
@@ -27,7 +27,7 @@ enum MsgType {
 
 
 // 设备类型
-enum DeviceType {
+enum ClientType {
   WINDOWS = 0;    // windows
   LINUX = 1;      // linux
   MAC = 2;        // mac
@@ -41,13 +41,16 @@ enum OnlineStatus {
   OFFLINE = 0;  // 离线
   INVISIBLE = 1; // 隐身
   WIFI = 2;     // wifi在线
-  CELLULAR = 3; // 3g/4g/5g在线
+  CELLULAR_3G = 3; // 3g在线
+  CELLULAR_4G = 4; // 4g在线
+  CELLULAR_5G = 5; // 5g在线
 }
 
+// 5g在线
 
 // 在线类型
 message OnlineType {
-  DeviceType device = 1;
+  ClientType client = 1;
   OnlineStatus status = 2;
 }
 

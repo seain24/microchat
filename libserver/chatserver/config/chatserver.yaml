@@ -16,10 +16,21 @@ log:
   filepath: ./logs
   filename: chatserver.log
 
+# database config
 database:
   host: 127.0.0.1
   port: 3306
-  uname: root
+  username: root
   password: 123456
   dbname: mircochat
+  max_connection: 30
+  min_connection: 5
   timeout: 5s
+
+# redis config
+redis:
+  host: 172.16.112.2
+  port: 6379
+  database: 12
+  username: root
+  password: 123456

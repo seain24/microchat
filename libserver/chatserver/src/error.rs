@@ -11,5 +11,5 @@ pub enum Error {
     #[error("path is invalid")]
     PathInvalid,
     #[error("connect to database failed, {0}")]
-    DatabaseError(String),
+    DatabaseError(sea_orm::DbErr),
 }

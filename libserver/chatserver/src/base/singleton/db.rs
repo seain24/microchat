@@ -3,23 +3,24 @@ use std::time::Duration;
 
 use sea_orm::{ConnectOptions, Database, DatabaseConnection};
 
-use crate::base::cfg::Config;
 use crate::{Error, Result};
+use crate::base::config::Config;
 
 const MAX_CONNECTIONS: u32 = 100;
 const MIN_CONNECTIONS: u32 = 10;
 const CONNECT_TIMEOUT_SEC: Duration = Duration::from_secs(10); // 10s
 const CONNECT_IDLE_TIMEOUT_SEC: Duration = Duration::from_secs(8);
 
-pub struct DbPool(pub DatabaseConnection);
+#[derive(Clone)]
+pub struct DbPool(pub Arc<DatabaseConnection>);
 
 static INSTANCE: OnceLock<DbPool> = OnceLock::new();
 
 impl DbPool {
-    async fn new(cfg: Arc<Config>) -> Result<Self> {
+    async fn new(cfg: &Config) -> Result<Self> {
         let dburl: String = format!(
             "mysql://{}:{}@{}:{}/{}",
-            cfg.database.uname,
+            cfg.database.username,
             cfg.database.password,
             &cfg.database.host,
             &cfg.database.port,
@@ -35,13 +36,13 @@ impl DbPool {
             .acquire_timeout(CONNECT_IDLE_TIMEOUT_SEC)
             .sqlx_logging(false)
             .sqlx_logging_level(tracing::log::LevelFilter::Info);
-        let conn = Database::connect(opt).await.map_err(|e| Error::DatabaseError(e.to_string()))?;
+        let conn = Arc::new(Database::connect(opt).await.map_err(|e| Error::DatabaseError(e))?);
         Ok(DbPool(conn))
     }
 
-    pub async fn get_instance(cfg: Arc<Config>) -> Result<Arc<Self>> {
+    pub async fn get_instance(cfg: &Config) -> Result<Self> {
         // static mut INSTANCE: Option<Mutex<DbPool>> = None;
-        // static ONCE: Once = Once::new();
+        // static ONCE = std::sync::Once::new();
         // unsafe {
         //     ONCE.call_once(async || {
         //         let instance = DbPool::new(cfg).await?;
@@ -49,6 +50,13 @@ impl DbPool {
         //     });
         //     Ok(INSTANCE.as_ref().unwrap().clone())
         // }
-        DbPool::new(cfg).await.map(|v| Arc::new(v))
+        match INSTANCE.get() {
+            None => {
+                let instance = DbPool::new(cfg).await?;
+                _ = INSTANCE.set(instance.clone());
+                Ok(instance)
+            }
+            Some(v) => Ok(v.clone()),
+        }
     }
 }

@@ -1,14 +1,14 @@
 use std::sync::Arc;
 
-use crate::base::singleton::db::DbPool;
+use crate::db::Data;
 
 pub struct AppState {
-    pub config: Arc<super::cfg::Config>,
-    pub conn: Arc<DbPool>,
+    pub config: Arc<super::config::Config>,
+    pub data: Arc<Data>,
 }
 
 impl AppState {
-    pub fn new(config: Arc<super::cfg::Config>, conn: Arc<DbPool>) -> Self {
-        AppState { config, conn }
+    pub fn new(config: Arc<super::config::Config>, data: Arc<Data>) -> Self {
+        AppState { config, data }
     }
 }

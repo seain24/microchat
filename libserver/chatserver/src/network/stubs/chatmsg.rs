@@ -24,16 +24,16 @@
 /// of protobuf runtime.
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_5_1;
 
-// @@protoc_insertion_point(message:microchat.OnlineType)
+// @@protoc_insertion_point(message:microchat.msg.OnlineType)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct OnlineType {
     // message fields
-    // @@protoc_insertion_point(field:microchat.OnlineType.device)
-    pub device: ::protobuf::EnumOrUnknown<DeviceType>,
-    // @@protoc_insertion_point(field:microchat.OnlineType.status)
+    // @@protoc_insertion_point(field:microchat.msg.OnlineType.client)
+    pub client: ::protobuf::EnumOrUnknown<ClientType>,
+    // @@protoc_insertion_point(field:microchat.msg.OnlineType.status)
     pub status: ::protobuf::EnumOrUnknown<OnlineStatus>,
     // special fields
-    // @@protoc_insertion_point(special_field:microchat.OnlineType.special_fields)
+    // @@protoc_insertion_point(special_field:microchat.msg.OnlineType.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -52,9 +52,9 @@ impl OnlineType {
         let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "device",
-            |m: &OnlineType| { &m.device },
-            |m: &mut OnlineType| { &mut m.device },
+            "client",
+            |m: &OnlineType| { &m.client },
+            |m: &mut OnlineType| { &mut m.client },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "status",
@@ -80,7 +80,7 @@ impl ::protobuf::Message for OnlineType {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 8 => {
-                    self.device = is.read_enum_or_unknown()?;
+                    self.client = is.read_enum_or_unknown()?;
                 },
                 16 => {
                     self.status = is.read_enum_or_unknown()?;
@@ -97,8 +97,8 @@ impl ::protobuf::Message for OnlineType {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.device != ::protobuf::EnumOrUnknown::new(DeviceType::WINDOWS) {
-            my_size += ::protobuf::rt::int32_size(1, self.device.value());
+        if self.client != ::protobuf::EnumOrUnknown::new(ClientType::WINDOWS) {
+            my_size += ::protobuf::rt::int32_size(1, self.client.value());
         }
         if self.status != ::protobuf::EnumOrUnknown::new(OnlineStatus::OFFLINE) {
             my_size += ::protobuf::rt::int32_size(2, self.status.value());
@@ -109,8 +109,8 @@ impl ::protobuf::Message for OnlineType {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.device != ::protobuf::EnumOrUnknown::new(DeviceType::WINDOWS) {
-            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.device))?;
+        if self.client != ::protobuf::EnumOrUnknown::new(ClientType::WINDOWS) {
+            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.client))?;
         }
         if self.status != ::protobuf::EnumOrUnknown::new(OnlineStatus::OFFLINE) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.status))?;
@@ -132,14 +132,14 @@ impl ::protobuf::Message for OnlineType {
     }
 
     fn clear(&mut self) {
-        self.device = ::protobuf::EnumOrUnknown::new(DeviceType::WINDOWS);
+        self.client = ::protobuf::EnumOrUnknown::new(ClientType::WINDOWS);
         self.status = ::protobuf::EnumOrUnknown::new(OnlineStatus::OFFLINE);
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static OnlineType {
         static instance: OnlineType = OnlineType {
-            device: ::protobuf::EnumOrUnknown::from_i32(0),
+            client: ::protobuf::EnumOrUnknown::from_i32(0),
             status: ::protobuf::EnumOrUnknown::from_i32(0),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -164,20 +164,20 @@ impl ::protobuf::reflect::ProtobufValue for OnlineType {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-// @@protoc_insertion_point(message:microchat.Header)
+// @@protoc_insertion_point(message:microchat.msg.Header)
 #[derive(PartialEq,Clone,Default,Debug)]
 pub struct Header {
     // message fields
-    // @@protoc_insertion_point(field:microchat.Header.compress)
+    // @@protoc_insertion_point(field:microchat.msg.Header.compress)
     pub compress: bool,
-    // @@protoc_insertion_point(field:microchat.Header.origin_size)
+    // @@protoc_insertion_point(field:microchat.msg.Header.origin_size)
     pub origin_size: i32,
-    // @@protoc_insertion_point(field:microchat.Header.compress_size)
+    // @@protoc_insertion_point(field:microchat.msg.Header.compress_size)
     pub compress_size: i32,
-    // @@protoc_insertion_point(field:microchat.Header.reserved)
+    // @@protoc_insertion_point(field:microchat.msg.Header.reserved)
     pub reserved: ::std::option::Option<::std::string::String>,
     // special fields
-    // @@protoc_insertion_point(special_field:microchat.Header.special_fields)
+    // @@protoc_insertion_point(special_field:microchat.msg.Header.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -341,45 +341,45 @@ impl ::protobuf::reflect::ProtobufValue for Header {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.MsgType)
+// @@protoc_insertion_point(enum:microchat.msg.MsgType)
 pub enum MsgType {
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.UNKNOWN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.UNKNOWN)
     UNKNOWN = 0,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.HEARTBEAT)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.HEARTBEAT)
     HEARTBEAT = 1,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.REGISTER)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.REGISTER)
     REGISTER = 2,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.LOGIN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.LOGIN)
     LOGIN = 3,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.GET_OFRIEND_LIST)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.GET_OFRIEND_LIST)
     GET_OFRIEND_LIST = 4,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.FIND_USER)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.FIND_USER)
     FIND_USER = 5,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.OPERATE_FRIEND)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.OPERATE_FRIEND)
     OPERATE_FRIEND = 6,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.USER_STATUS_CHANGE)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.USER_STATUS_CHANGE)
     USER_STATUS_CHANGE = 7,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.UPDATE_USER_INFO)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.UPDATE_USER_INFO)
     UPDATE_USER_INFO = 8,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.MODIFY_PASSWORD)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.MODIFY_PASSWORD)
     MODIFY_PASSWORD = 9,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.CREATE_GROUP)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.CREATE_GROUP)
     CREATE_GROUP = 10,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.GET_GROUP_MEMBERS)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.GET_GROUP_MEMBERS)
     GET_GROUP_MEMBERS = 11,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.CHAT)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.CHAT)
     CHAT = 50,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.MULTI_CHAT)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.MULTI_CHAT)
     MULTI_CHAT = 51,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.KICK_USER)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.KICK_USER)
     KICK_USER = 52,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.REMOTE_DESKTOP)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.REMOTE_DESKTOP)
     REMOTE_DESKTOP = 53,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.UPDATE_TEAM_INFO)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.UPDATE_TEAM_INFO)
     UPDATE_TEAM_INFO = 54,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.MODIFY_FRIEND_MARKNAME)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.MODIFY_FRIEND_MARKNAME)
     MODIFY_FRIEND_MARKNAME = 55,
-    // @@protoc_insertion_point(enum_value:microchat.MsgType.MOVE_FRIEND_TO_OTHER_TEAM)
+    // @@protoc_insertion_point(enum_value:microchat.msg.MsgType.MOVE_FRIEND_TO_OTHER_TEAM)
     MOVE_FRIEND_TO_OTHER_TEAM = 56,
 }
 
@@ -508,67 +508,67 @@ impl MsgType {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.DeviceType)
-pub enum DeviceType {
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.WINDOWS)
+// @@protoc_insertion_point(enum:microchat.msg.ClientType)
+pub enum ClientType {
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.WINDOWS)
     WINDOWS = 0,
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.LINUX)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.LINUX)
     LINUX = 1,
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.MAC)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.MAC)
     MAC = 2,
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.ANDROID)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.ANDROID)
     ANDROID = 3,
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.IOS)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.IOS)
     IOS = 4,
-    // @@protoc_insertion_point(enum_value:microchat.DeviceType.IPAD)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ClientType.IPAD)
     IPAD = 5,
 }
 
-impl ::protobuf::Enum for DeviceType {
-    const NAME: &'static str = "DeviceType";
+impl ::protobuf::Enum for ClientType {
+    const NAME: &'static str = "ClientType";
 
     fn value(&self) -> i32 {
         *self as i32
     }
 
-    fn from_i32(value: i32) -> ::std::option::Option<DeviceType> {
+    fn from_i32(value: i32) -> ::std::option::Option<ClientType> {
         match value {
-            0 => ::std::option::Option::Some(DeviceType::WINDOWS),
-            1 => ::std::option::Option::Some(DeviceType::LINUX),
-            2 => ::std::option::Option::Some(DeviceType::MAC),
-            3 => ::std::option::Option::Some(DeviceType::ANDROID),
-            4 => ::std::option::Option::Some(DeviceType::IOS),
-            5 => ::std::option::Option::Some(DeviceType::IPAD),
+            0 => ::std::option::Option::Some(ClientType::WINDOWS),
+            1 => ::std::option::Option::Some(ClientType::LINUX),
+            2 => ::std::option::Option::Some(ClientType::MAC),
+            3 => ::std::option::Option::Some(ClientType::ANDROID),
+            4 => ::std::option::Option::Some(ClientType::IOS),
+            5 => ::std::option::Option::Some(ClientType::IPAD),
             _ => ::std::option::Option::None
         }
     }
 
-    fn from_str(str: &str) -> ::std::option::Option<DeviceType> {
+    fn from_str(str: &str) -> ::std::option::Option<ClientType> {
         match str {
-            "WINDOWS" => ::std::option::Option::Some(DeviceType::WINDOWS),
-            "LINUX" => ::std::option::Option::Some(DeviceType::LINUX),
-            "MAC" => ::std::option::Option::Some(DeviceType::MAC),
-            "ANDROID" => ::std::option::Option::Some(DeviceType::ANDROID),
-            "IOS" => ::std::option::Option::Some(DeviceType::IOS),
-            "IPAD" => ::std::option::Option::Some(DeviceType::IPAD),
+            "WINDOWS" => ::std::option::Option::Some(ClientType::WINDOWS),
+            "LINUX" => ::std::option::Option::Some(ClientType::LINUX),
+            "MAC" => ::std::option::Option::Some(ClientType::MAC),
+            "ANDROID" => ::std::option::Option::Some(ClientType::ANDROID),
+            "IOS" => ::std::option::Option::Some(ClientType::IOS),
+            "IPAD" => ::std::option::Option::Some(ClientType::IPAD),
             _ => ::std::option::Option::None
         }
     }
 
-    const VALUES: &'static [DeviceType] = &[
-        DeviceType::WINDOWS,
-        DeviceType::LINUX,
-        DeviceType::MAC,
-        DeviceType::ANDROID,
-        DeviceType::IOS,
-        DeviceType::IPAD,
+    const VALUES: &'static [ClientType] = &[
+        ClientType::WINDOWS,
+        ClientType::LINUX,
+        ClientType::MAC,
+        ClientType::ANDROID,
+        ClientType::IOS,
+        ClientType::IPAD,
     ];
 }
 
-impl ::protobuf::EnumFull for DeviceType {
+impl ::protobuf::EnumFull for ClientType {
     fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
         static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().enum_by_package_relative_name("DeviceType").unwrap()).clone()
+        descriptor.get(|| file_descriptor().enum_by_package_relative_name("ClientType").unwrap()).clone()
     }
 
     fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
@@ -577,29 +577,33 @@ impl ::protobuf::EnumFull for DeviceType {
     }
 }
 
-impl ::std::default::Default for DeviceType {
+impl ::std::default::Default for ClientType {
     fn default() -> Self {
-        DeviceType::WINDOWS
+        ClientType::WINDOWS
     }
 }
 
-impl DeviceType {
+impl ClientType {
     fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-        ::protobuf::reflect::GeneratedEnumDescriptorData::new::<DeviceType>("DeviceType")
+        ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ClientType>("ClientType")
     }
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.OnlineStatus)
+// @@protoc_insertion_point(enum:microchat.msg.OnlineStatus)
 pub enum OnlineStatus {
-    // @@protoc_insertion_point(enum_value:microchat.OnlineStatus.OFFLINE)
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.OFFLINE)
     OFFLINE = 0,
-    // @@protoc_insertion_point(enum_value:microchat.OnlineStatus.INVISIBLE)
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.INVISIBLE)
     INVISIBLE = 1,
-    // @@protoc_insertion_point(enum_value:microchat.OnlineStatus.WIFI)
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.WIFI)
     WIFI = 2,
-    // @@protoc_insertion_point(enum_value:microchat.OnlineStatus.CELLULAR)
-    CELLULAR = 3,
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.CELLULAR_3G)
+    CELLULAR_3G = 3,
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.CELLULAR_4G)
+    CELLULAR_4G = 4,
+    // @@protoc_insertion_point(enum_value:microchat.msg.OnlineStatus.CELLULAR_5G)
+    CELLULAR_5G = 5,
 }
 
 impl ::protobuf::Enum for OnlineStatus {
@@ -614,7 +618,9 @@ impl ::protobuf::Enum for OnlineStatus {
             0 => ::std::option::Option::Some(OnlineStatus::OFFLINE),
             1 => ::std::option::Option::Some(OnlineStatus::INVISIBLE),
             2 => ::std::option::Option::Some(OnlineStatus::WIFI),
-            3 => ::std::option::Option::Some(OnlineStatus::CELLULAR),
+            3 => ::std::option::Option::Some(OnlineStatus::CELLULAR_3G),
+            4 => ::std::option::Option::Some(OnlineStatus::CELLULAR_4G),
+            5 => ::std::option::Option::Some(OnlineStatus::CELLULAR_5G),
             _ => ::std::option::Option::None
         }
     }
@@ -624,7 +630,9 @@ impl ::protobuf::Enum for OnlineStatus {
             "OFFLINE" => ::std::option::Option::Some(OnlineStatus::OFFLINE),
             "INVISIBLE" => ::std::option::Option::Some(OnlineStatus::INVISIBLE),
             "WIFI" => ::std::option::Option::Some(OnlineStatus::WIFI),
-            "CELLULAR" => ::std::option::Option::Some(OnlineStatus::CELLULAR),
+            "CELLULAR_3G" => ::std::option::Option::Some(OnlineStatus::CELLULAR_3G),
+            "CELLULAR_4G" => ::std::option::Option::Some(OnlineStatus::CELLULAR_4G),
+            "CELLULAR_5G" => ::std::option::Option::Some(OnlineStatus::CELLULAR_5G),
             _ => ::std::option::Option::None
         }
     }
@@ -633,7 +641,9 @@ impl ::protobuf::Enum for OnlineStatus {
         OnlineStatus::OFFLINE,
         OnlineStatus::INVISIBLE,
         OnlineStatus::WIFI,
-        OnlineStatus::CELLULAR,
+        OnlineStatus::CELLULAR_3G,
+        OnlineStatus::CELLULAR_4G,
+        OnlineStatus::CELLULAR_5G,
     ];
 }
 
@@ -662,19 +672,19 @@ impl OnlineStatus {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.FriendOperationType)
+// @@protoc_insertion_point(enum:microchat.msg.FriendOperationType)
 pub enum FriendOperationType {
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.OPERATION_UNKNOWN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.OPERATION_UNKNOWN)
     OPERATION_UNKNOWN = 0,
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.SEND_ADD_APPLY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.SEND_ADD_APPLY)
     SEND_ADD_APPLY = 1,
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.RECV_ADD_APPLY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.RECV_ADD_APPLY)
     RECV_ADD_APPLY = 2,
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.REPLY_ADD_APPLY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.REPLY_ADD_APPLY)
     REPLY_ADD_APPLY = 3,
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.SEND_DELETE_APPLY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.SEND_DELETE_APPLY)
     SEND_DELETE_APPLY = 4,
-    // @@protoc_insertion_point(enum_value:microchat.FriendOperationType.RECV_DELETE_APPLY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.FriendOperationType.RECV_DELETE_APPLY)
     RECV_DELETE_APPLY = 5,
 }
 
@@ -744,13 +754,13 @@ impl FriendOperationType {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.friendOperationApplyType)
+// @@protoc_insertion_point(enum:microchat.msg.friendOperationApplyType)
 pub enum FriendOperationApplyType {
-    // @@protoc_insertion_point(enum_value:microchat.friendOperationApplyType.APPLY_UNKNOWN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.friendOperationApplyType.APPLY_UNKNOWN)
     APPLY_UNKNOWN = 0,
-    // @@protoc_insertion_point(enum_value:microchat.friendOperationApplyType.APPLY_REFUSED)
+    // @@protoc_insertion_point(enum_value:microchat.msg.friendOperationApplyType.APPLY_REFUSED)
     APPLY_REFUSED = 1,
-    // @@protoc_insertion_point(enum_value:microchat.friendOperationApplyType.APPLY_ACCEPTED)
+    // @@protoc_insertion_point(enum_value:microchat.msg.friendOperationApplyType.APPLY_ACCEPTED)
     APPLY_ACCEPTED = 2,
 }
 
@@ -811,15 +821,15 @@ impl FriendOperationApplyType {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.GroupOperationType)
+// @@protoc_insertion_point(enum:microchat.msg.GroupOperationType)
 pub enum GroupOperationType {
-    // @@protoc_insertion_point(enum_value:microchat.GroupOperationType.GROUP_OPERATION_UNKNOWN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.GroupOperationType.GROUP_OPERATION_UNKNOWN)
     GROUP_OPERATION_UNKNOWN = 0,
-    // @@protoc_insertion_point(enum_value:microchat.GroupOperationType.GROUP_OPERATION_ADD)
+    // @@protoc_insertion_point(enum_value:microchat.msg.GroupOperationType.GROUP_OPERATION_ADD)
     GROUP_OPERATION_ADD = 1,
-    // @@protoc_insertion_point(enum_value:microchat.GroupOperationType.GROUP_OPERATION_DELETE)
+    // @@protoc_insertion_point(enum_value:microchat.msg.GroupOperationType.GROUP_OPERATION_DELETE)
     GROUP_OPERATION_DELETE = 2,
-    // @@protoc_insertion_point(enum_value:microchat.GroupOperationType.GROUP_OPERATION_MODIFY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.GroupOperationType.GROUP_OPERATION_MODIFY)
     GROUP_OPERATION_MODIFY = 3,
 }
 
@@ -883,33 +893,33 @@ impl GroupOperationType {
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:microchat.ErrorCode)
+// @@protoc_insertion_point(enum:microchat.msg.ErrorCode)
 pub enum ErrorCode {
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_UNKNOWN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_UNKNOWN)
     ERR_UNKNOWN = 0,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_OK)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_OK)
     ERR_OK = 1,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_NOT_LOGIN)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_NOT_LOGIN)
     ERR_NOT_LOGIN = 2,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_REG_FAIL)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_REG_FAIL)
     ERR_REG_FAIL = 100,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_REG_ALREADY)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_REG_ALREADY)
     ERR_REG_ALREADY = 101,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_NOT_REG)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_NOT_REG)
     ERR_NOT_REG = 102,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_INVALID_PSW)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_INVALID_PSW)
     ERR_INVALID_PSW = 103,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_UPD_USERINFO_FAIL)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_UPD_USERINFO_FAIL)
     ERR_UPD_USERINFO_FAIL = 104,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_MODIFY_PSW_FAIL)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_MODIFY_PSW_FAIL)
     ERR_MODIFY_PSW_FAIL = 105,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_CRE_GROUP_FAIL)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_CRE_GROUP_FAIL)
     ERR_CRE_GROUP_FAIL = 106,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_TOO_OLD_VER)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_TOO_OLD_VER)
     ERR_TOO_OLD_VER = 107,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_MODIFY_MARKNAME_FAIL)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_MODIFY_MARKNAME_FAIL)
     ERR_MODIFY_MARKNAME_FAIL = 108,
-    // @@protoc_insertion_point(enum_value:microchat.ErrorCode.ERR_GROUPNAME_EXIST)
+    // @@protoc_insertion_point(enum_value:microchat.msg.ErrorCode.ERR_GROUPNAME_EXIST)
     ERR_GROUPNAME_EXIST = 109,
 }
 
@@ -1014,42 +1024,43 @@ impl ErrorCode {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rchatmsg.proto\x12\tmicrochat\"l\n\nOnlineType\x12-\n\x06device\x18\
-    \x01\x20\x01(\x0e2\x15.microchat.DeviceTypeR\x06device\x12/\n\x06status\
-    \x18\x02\x20\x01(\x0e2\x17.microchat.OnlineStatusR\x06status\"\x98\x01\n\
-    \x06Header\x12\x1a\n\x08compress\x18\x01\x20\x01(\x08R\x08compress\x12\
-    \x1f\n\x0borigin_size\x18\x02\x20\x01(\x05R\noriginSize\x12#\n\rcompress\
-    _size\x18\x03\x20\x01(\x05R\x0ccompressSize\x12\x1f\n\x08reserved\x18\
-    \x04\x20\x01(\tH\0R\x08reserved\x88\x01\x01B\x0b\n\t_reserved*\xf1\x02\n\
-    \x07MsgType\x12\x0b\n\x07UNKNOWN\x10\0\x12\r\n\tHEARTBEAT\x10\x01\x12\
-    \x0c\n\x08REGISTER\x10\x02\x12\t\n\x05LOGIN\x10\x03\x12\x14\n\x10GET_OFR\
-    IEND_LIST\x10\x04\x12\r\n\tFIND_USER\x10\x05\x12\x12\n\x0eOPERATE_FRIEND\
-    \x10\x06\x12\x16\n\x12USER_STATUS_CHANGE\x10\x07\x12\x14\n\x10UPDATE_USE\
-    R_INFO\x10\x08\x12\x13\n\x0fMODIFY_PASSWORD\x10\t\x12\x10\n\x0cCREATE_GR\
-    OUP\x10\n\x12\x15\n\x11GET_GROUP_MEMBERS\x10\x0b\x12\x08\n\x04CHAT\x102\
-    \x12\x0e\n\nMULTI_CHAT\x103\x12\r\n\tKICK_USER\x104\x12\x12\n\x0eREMOTE_\
-    DESKTOP\x105\x12\x14\n\x10UPDATE_TEAM_INFO\x106\x12\x1a\n\x16MODIFY_FRIE\
-    ND_MARKNAME\x107\x12\x1d\n\x19MOVE_FRIEND_TO_OTHER_TEAM\x108*M\n\nDevice\
-    Type\x12\x0b\n\x07WINDOWS\x10\0\x12\t\n\x05LINUX\x10\x01\x12\x07\n\x03MA\
-    C\x10\x02\x12\x0b\n\x07ANDROID\x10\x03\x12\x07\n\x03IOS\x10\x04\x12\x08\
-    \n\x04IPAD\x10\x05*B\n\x0cOnlineStatus\x12\x0b\n\x07OFFLINE\x10\0\x12\r\
-    \n\tINVISIBLE\x10\x01\x12\x08\n\x04WIFI\x10\x02\x12\x0c\n\x08CELLULAR\
-    \x10\x03*\x97\x01\n\x13FriendOperationType\x12\x15\n\x11OPERATION_UNKNOW\
-    N\x10\0\x12\x12\n\x0eSEND_ADD_APPLY\x10\x01\x12\x12\n\x0eRECV_ADD_APPLY\
-    \x10\x02\x12\x13\n\x0fREPLY_ADD_APPLY\x10\x03\x12\x15\n\x11SEND_DELETE_A\
-    PPLY\x10\x04\x12\x15\n\x11RECV_DELETE_APPLY\x10\x05*T\n\x18friendOperati\
-    onApplyType\x12\x11\n\rAPPLY_UNKNOWN\x10\0\x12\x11\n\rAPPLY_REFUSED\x10\
-    \x01\x12\x12\n\x0eAPPLY_ACCEPTED\x10\x02*\x82\x01\n\x12GroupOperationTyp\
-    e\x12\x1b\n\x17GROUP_OPERATION_UNKNOWN\x10\0\x12\x17\n\x13GROUP_OPERATIO\
-    N_ADD\x10\x01\x12\x1a\n\x16GROUP_OPERATION_DELETE\x10\x02\x12\x1a\n\x16G\
-    ROUP_OPERATION_MODIFY\x10\x03*\xa0\x02\n\tErrorCode\x12\x0f\n\x0bERR_UNK\
-    NOWN\x10\0\x12\n\n\x06ERR_OK\x10\x01\x12\x11\n\rERR_NOT_LOGIN\x10\x02\
-    \x12\x10\n\x0cERR_REG_FAIL\x10d\x12\x13\n\x0fERR_REG_ALREADY\x10e\x12\
-    \x0f\n\x0bERR_NOT_REG\x10f\x12\x13\n\x0fERR_INVALID_PSW\x10g\x12\x19\n\
-    \x15ERR_UPD_USERINFO_FAIL\x10h\x12\x17\n\x13ERR_MODIFY_PSW_FAIL\x10i\x12\
-    \x16\n\x12ERR_CRE_GROUP_FAIL\x10j\x12\x13\n\x0fERR_TOO_OLD_VER\x10k\x12\
-    \x1c\n\x18ERR_MODIFY_MARKNAME_FAIL\x10l\x12\x17\n\x13ERR_GROUPNAME_EXIST\
-    \x10mb\x06proto3\
+    \n\rchatmsg.proto\x12\rmicrochat.msg\"t\n\nOnlineType\x121\n\x06client\
+    \x18\x01\x20\x01(\x0e2\x19.microchat.msg.ClientTypeR\x06client\x123\n\
+    \x06status\x18\x02\x20\x01(\x0e2\x1b.microchat.msg.OnlineStatusR\x06stat\
+    us\"\x98\x01\n\x06Header\x12\x1a\n\x08compress\x18\x01\x20\x01(\x08R\x08\
+    compress\x12\x1f\n\x0borigin_size\x18\x02\x20\x01(\x05R\noriginSize\x12#\
+    \n\rcompress_size\x18\x03\x20\x01(\x05R\x0ccompressSize\x12\x1f\n\x08res\
+    erved\x18\x04\x20\x01(\tH\0R\x08reserved\x88\x01\x01B\x0b\n\t_reserved*\
+    \xf1\x02\n\x07MsgType\x12\x0b\n\x07UNKNOWN\x10\0\x12\r\n\tHEARTBEAT\x10\
+    \x01\x12\x0c\n\x08REGISTER\x10\x02\x12\t\n\x05LOGIN\x10\x03\x12\x14\n\
+    \x10GET_OFRIEND_LIST\x10\x04\x12\r\n\tFIND_USER\x10\x05\x12\x12\n\x0eOPE\
+    RATE_FRIEND\x10\x06\x12\x16\n\x12USER_STATUS_CHANGE\x10\x07\x12\x14\n\
+    \x10UPDATE_USER_INFO\x10\x08\x12\x13\n\x0fMODIFY_PASSWORD\x10\t\x12\x10\
+    \n\x0cCREATE_GROUP\x10\n\x12\x15\n\x11GET_GROUP_MEMBERS\x10\x0b\x12\x08\
+    \n\x04CHAT\x102\x12\x0e\n\nMULTI_CHAT\x103\x12\r\n\tKICK_USER\x104\x12\
+    \x12\n\x0eREMOTE_DESKTOP\x105\x12\x14\n\x10UPDATE_TEAM_INFO\x106\x12\x1a\
+    \n\x16MODIFY_FRIEND_MARKNAME\x107\x12\x1d\n\x19MOVE_FRIEND_TO_OTHER_TEAM\
+    \x108*M\n\nClientType\x12\x0b\n\x07WINDOWS\x10\0\x12\t\n\x05LINUX\x10\
+    \x01\x12\x07\n\x03MAC\x10\x02\x12\x0b\n\x07ANDROID\x10\x03\x12\x07\n\x03\
+    IOS\x10\x04\x12\x08\n\x04IPAD\x10\x05*g\n\x0cOnlineStatus\x12\x0b\n\x07O\
+    FFLINE\x10\0\x12\r\n\tINVISIBLE\x10\x01\x12\x08\n\x04WIFI\x10\x02\x12\
+    \x0f\n\x0bCELLULAR_3G\x10\x03\x12\x0f\n\x0bCELLULAR_4G\x10\x04\x12\x0f\n\
+    \x0bCELLULAR_5G\x10\x05*\x97\x01\n\x13FriendOperationType\x12\x15\n\x11O\
+    PERATION_UNKNOWN\x10\0\x12\x12\n\x0eSEND_ADD_APPLY\x10\x01\x12\x12\n\x0e\
+    RECV_ADD_APPLY\x10\x02\x12\x13\n\x0fREPLY_ADD_APPLY\x10\x03\x12\x15\n\
+    \x11SEND_DELETE_APPLY\x10\x04\x12\x15\n\x11RECV_DELETE_APPLY\x10\x05*T\n\
+    \x18friendOperationApplyType\x12\x11\n\rAPPLY_UNKNOWN\x10\0\x12\x11\n\rA\
+    PPLY_REFUSED\x10\x01\x12\x12\n\x0eAPPLY_ACCEPTED\x10\x02*\x82\x01\n\x12G\
+    roupOperationType\x12\x1b\n\x17GROUP_OPERATION_UNKNOWN\x10\0\x12\x17\n\
+    \x13GROUP_OPERATION_ADD\x10\x01\x12\x1a\n\x16GROUP_OPERATION_DELETE\x10\
+    \x02\x12\x1a\n\x16GROUP_OPERATION_MODIFY\x10\x03*\xa0\x02\n\tErrorCode\
+    \x12\x0f\n\x0bERR_UNKNOWN\x10\0\x12\n\n\x06ERR_OK\x10\x01\x12\x11\n\rERR\
+    _NOT_LOGIN\x10\x02\x12\x10\n\x0cERR_REG_FAIL\x10d\x12\x13\n\x0fERR_REG_A\
+    LREADY\x10e\x12\x0f\n\x0bERR_NOT_REG\x10f\x12\x13\n\x0fERR_INVALID_PSW\
+    \x10g\x12\x19\n\x15ERR_UPD_USERINFO_FAIL\x10h\x12\x17\n\x13ERR_MODIFY_PS\
+    W_FAIL\x10i\x12\x16\n\x12ERR_CRE_GROUP_FAIL\x10j\x12\x13\n\x0fERR_TOO_OL\
+    D_VER\x10k\x12\x1c\n\x18ERR_MODIFY_MARKNAME_FAIL\x10l\x12\x17\n\x13ERR_G\
+    ROUPNAME_EXIST\x10mb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1072,7 +1083,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(Header::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(7);
             enums.push(MsgType::generated_enum_descriptor_data());
-            enums.push(DeviceType::generated_enum_descriptor_data());
+            enums.push(ClientType::generated_enum_descriptor_data());
             enums.push(OnlineStatus::generated_enum_descriptor_data());
             enums.push(FriendOperationType::generated_enum_descriptor_data());
             enums.push(FriendOperationApplyType::generated_enum_descriptor_data());

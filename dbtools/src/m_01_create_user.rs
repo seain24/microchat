@@ -16,16 +16,10 @@ impl MigrationTrait for Migration {
                             .big_integer()
                             .not_null()
                             .auto_increment()
-                            .unique_key()
+                            .primary_key()
                             .comment("自增ID"),
                     )
-                    .col(
-                        ColumnDef::new(User::UserId)
-                            .big_integer()
-                            .not_null()
-                            .primary_key()
-                            .comment("用户ID"),
-                    )
+                    .col(ColumnDef::new(User::UserId).unique_key().string().not_null().comment("用户ID"))
                     .col(
                         ColumnDef::new(User::UserName)
                             .string()
@@ -41,9 +35,9 @@ impl MigrationTrait for Migration {
                             .comment("用户昵称"),
                     )
                     .col(ColumnDef::new(User::Password).string().string_len(64).comment("用户密码"))
-                    .col(ColumnDef::new(User::Gender).integer().default(0).comment("性别"))
+                    .col(ColumnDef::new(User::Gender).integer().default(0).not_null().comment("性别"))
                     .col(ColumnDef::new(User::Birthday).big_integer().default(19900101).comment("生日"))
-                    .col(ColumnDef::new(User::Phone).string().string_len(64).comment("电话"))
+                    .col(ColumnDef::new(User::Phone).string().string_len(64).not_null().comment("电话"))
                     .col(ColumnDef::new(User::Email).string().string_len(256).comment("邮箱"))
                     .col(ColumnDef::new(User::Address).string().string_len(256).comment("地址"))
                     .col(ColumnDef::new(User::Signature).string().string_len(64).comment("个性签名"))

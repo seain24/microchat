@@ -1,24 +1,24 @@
-[workspace]
-resolver = "2"
-members = ["dbtools", "libserver/chatserver", "libserver/fileserver", "libserver/imgserver"]
-
-[workspace.dependencies]
-async-trait = "0.1.81"
-bytes = "1.7.1"
-chrono = "0.4.38"
-clap = { version = "4.5.16", features = ["derive"] }
-humantime-serde = "1.1.1"
-mime = "0.3.17"
-once_cell = "1.19.0"
-protobuf = "3.5.1"
-sea-orm = { version = "1.0.0", features = ["sqlx-mysql", "runtime-tokio-rustls"] }
-serde = { version = "1.0.209", features = ["derive"] }
-serde_json = "1.0.127"
-serde_with = "3.9.0"
-thiserror = "1.0.63"
-time = { version = "0.3.36", features = ["macros", "serde"] }
-tokio = { version = "1.39.3", features = ["full"] }
-tracing = "0.1.40"
-tracing-appender = "0.2.3"
-tracing-subscriber = { version = "0.3.18", features = ["time", "chrono", "local-time", "env-filter"] }
-
+#[workspace]
+#resolver = "2"
+#members = ["dbtools", "libserver/chatserver", "libserver/fileserver", "libserver/imgserver"]
+#
+#[workspace.dependencies]
+#async-trait = "0.1.81"
+#bytes = "1.7.1"
+#chrono = "0.4.38"
+#clap = { version = "4.5.16", features = ["derive"] }
+#humantime-serde = "1.1.1"
+#mime = "0.3.17"
+#once_cell = "1.19.0"
+#protobuf = "3.5.1"
+#sea-orm = { version = "1.0.0", features = ["sqlx-mysql", "runtime-tokio-rustls"] }
+#serde = { version = "1.0.209", features = ["derive"] }
+#serde_json = "1.0.127"
+#serde_with = "3.9.0"
+#thiserror = "1.0.63"
+#time = { version = "0.3.36", features = ["macros", "serde"] }
+#tokio = { version = "1.39.3", features = ["full"] }
+#tracing = "0.1.40"
+#tracing-appender = "0.2.3"
+#tracing-subscriber = { version = "0.3.18", features = ["time", "chrono", "local-time", "env-filter"] }
+#

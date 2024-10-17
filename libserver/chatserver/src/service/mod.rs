@@ -1,1 +1,2 @@
-pub mod user_mgr;
+pub mod user;
+mod checker;

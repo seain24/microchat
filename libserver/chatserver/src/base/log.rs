@@ -10,7 +10,7 @@ use crate::{base, Error, Result};
 
 const LOG_ADMIN_TOKEN: &str = "mirco_chat_log";
 
-pub fn init_logger(cfg: &base::cfg::Config) -> Result<Box<dyn FnOnce()>> {
+pub fn init_logger(cfg: &base::config::Config) -> Result<Box<dyn FnOnce()>> {
     let (std_logout, _stdguard) = tracing_appender::non_blocking(std::io::stdout());
     let file_appender = tracing_appender::rolling::daily(&cfg.log.filepath, LOG_ADMIN_TOKEN);
     let (file_logout, _file_guard) = tracing_appender::non_blocking(file_appender);
