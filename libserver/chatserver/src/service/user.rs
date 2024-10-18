@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use anyhow::Context;
 use async_trait::async_trait;
 use chrono::NaiveDateTime;
 use once_cell::sync::Lazy;
@@ -10,10 +9,11 @@ use sea_orm::NotSet;
 use serde::{Deserialize, Serialize};
 use shaku::{Component, HasComponent, Interface};
 use validator::Validate;
-use crate::components::get_service_factory;
-use crate::components::redis::IRedisService;
+
+use crate::base::response::{Error, Result};
 use crate::db::entity::user as entity;
 use crate::db::repository::user::IUserRepository;
+use crate::service::checker::ICheckService;
 
 const MOBILE_PHONE_PATTERN: &str =
     "/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$/";
@@ -21,6 +21,8 @@ static MOBILE_PHONE_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(MOBILE_PHONE_PA
 /// 至少8个字符，至少包含一个字母（大写或小写）、数字或者特殊字符
 const PASSWORD_PATTERN: &str = r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$";
 static PASSWORD_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(PASSWORD_PATTERN).unwrap());
+
+const USER_KEY: &str = "username";
 
 #[repr(u8)]
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -53,30 +55,30 @@ impl Into<i32> for &Gender {
 
 #[derive(Debug, Deserialize, Validate)]
 pub struct SignUpRequest {
-    #[validate(length(min = 6, max = 20, code = "用户名至少6个字符，最多20个字符"))]
+    #[validate(length(min = 6, max = 20, message = "用户名至少6个字符，最多20个字符"))]
     pub username: String,
-    #[validate(length(min = 1, max = 20, code = "昵称至少6个字符，最多20个字符"))]
+    #[validate(length(min = 1, max = 20, message = "昵称至少6个字符，最多20个字符"))]
     pub nickname: String,
     #[validate(regex(
         path = "*PASSWORD_REGEX",
-        code = "至少8个字符，其中至少包含一个字母（大写或小写）、数字或者特殊字符"
+        message = "至少8个字符，其中至少包含一个字母（大写或小写）、数字或者特殊字符"
     ))]
     pub password: String,
-    #[validate(regex(path = "*MOBILE_PHONE_REGEX", code = "Please provide a valid mobile phone"))]
+    #[validate(regex(path = "*MOBILE_PHONE_REGEX", message = "Please provide a valid mobile phone"))]
     pub mobile: String,
-    #[validate(email(code = "Please provide a valid email!"))]
+    #[validate(email(message = "Please provide a valid email!"))]
     pub email: String,
     pub gender: Gender,
 }
 
 #[derive(Debug, Deserialize)]
 pub enum ClientType {
-    WINDOWS = 0,
-    LINUX = 1,
-    MAC = 2,
-    ANDROID = 3,
-    IOS = 4,
-    IPAD = 5,
+    WINDOWS = 1,
+    LINUX = 2,
+    MAC = 3,
+    ANDROID = 4,
+    IOS = 5,
+    IPAD = 6,
 }
 
 #[derive(Debug, Deserialize)]
@@ -91,9 +93,9 @@ pub enum OnlineStatus {
 
 #[derive(Debug, Deserialize, Validate)]
 pub struct SignInRequest {
-    #[validate(length(min = 1, code = "用户名不为空!"))]
+    #[validate(length(min = 1, message = "用户名不为空!"))]
     pub username: String,
-    #[validate(length(min = 8, code = "请提供一个合法的密码!"))]
+    #[validate(length(min = 8, message = "请提供一个合法的密码!"))]
     pub password: String,
     pub client_type: ClientType,
     pub online_status: OnlineStatus,
@@ -135,9 +137,9 @@ pub struct UserInfo {
 
 #[async_trait]
 pub trait IUserService: Interface {
-    async fn sign_up(&self, register_req: SignUpRequest) -> anyhow::Result<UserInfo>;
-    async fn sign_in(&self, login_req: SignInRequest) -> anyhow::Result<()>;
-    async fn sign_out(&self, user_id: &str) -> anyhow::Result<()>;
+    async fn sign_up(&self, register_req: SignUpRequest) -> Result<UserInfo>;
+    async fn sign_in(&self, login_req: SignInRequest) -> Result<()>;
+    async fn sign_out(&self, user_id: &str) -> Result<()>;
 }
 
 #[derive(Component)]
@@ -149,26 +151,39 @@ pub struct UserServiceImpl {
 
 #[async_trait]
 impl IUserService for UserServiceImpl {
-    async fn sign_up(&self, signup_req: SignUpRequest) -> anyhow::Result<UserInfo> {
-        // todo 校验用户名是否重复
-        let modules = get_service_factory()?;
-        let redis_service: &dyn IRedisService = modules.resolve_ref();
-        
+    async fn sign_up(&self, signup_req: SignUpRequest) -> Result<UserInfo> {
+        let modules = super::service_factory()?;
+        let check_service: &dyn ICheckService = modules.resolve_ref();
+        let duplicate = check_service.is_duplicate(USER_KEY, &signup_req.username).await;
+        match duplicate {
+            Ok(v) => {
+                if v {
+                    return Err(Error::UsernameDuplicate);
+                }
+            }
+            Err(err) => {
+                tracing::error!("check username failed, {err:#}");
+            }
+        }
 
-        let model = self.repo.add(signup_req.into()).await.context("user signed up failed")?;
+        // todo 密码需要加密处理
+        let model = self.repo.add(signup_req.into()).await.map_err(|err| {
+            tracing::error!("sign_up failed, {err:#}");
+            Error::InternalServerError
+        })?;
         Ok(model.into())
     }
 
-    async fn sign_in(&self, signin_req: SignInRequest) -> anyhow::Result<()> {
+    async fn sign_in(&self, signin_req: SignInRequest) -> Result<()> {
         // 校验用户是否注册
-        let user = self
-            .repo
-            .find_by_name(&signin_req.username)
-            .await
-            .context("user signed in failed")?;
+        let user = self.repo.find_by_name(&signin_req.username).await.map_err(|err| {
+            tracing::error!("sign_in failed, {err:#}");
+            Error::InternalServerError
+        })?;
 
         let Some(u) = user else {
-            return Err(anyhow::anyhow!("用户未注册"));
+            // 账号未注册
+            return Err(Error::UserNotRegistered);
         };
         // 校验用户名、密码是否正确
         let mut valid = false;
@@ -183,12 +198,12 @@ impl IUserService for UserServiceImpl {
         }
 
         if !valid {
-            return Err(anyhow::anyhow!("用户名或密码不正确"));
+            return Err(Error::UserNameOrPasswordMismatch);
         }
         return Ok(());
     }
 
-    async fn sign_out(&self, user_id: &str) -> anyhow::Result<()> {
+    async fn sign_out(&self, _user_id: &str) -> Result<()> {
         Ok(())
     }
 }

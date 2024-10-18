@@ -7,6 +7,7 @@ use sea_orm::{DatabaseConnection, DatabaseTransaction};
 use crate::components::mysql::{MysqlServiceImpl, MysqlServiceImplParameters};
 use crate::components::redis::{RedisServiceImpl, RedisServiceImplParameters};
 use crate::db::repository::user::UserRepositoryImpl;
+use crate::service::checker::CheckServiceImpl;
 use crate::service::user::UserServiceImpl;
 
 pub mod mysql;
@@ -24,6 +25,7 @@ shaku::module! {
             // biz components
             UserRepositoryImpl,
             UserServiceImpl,
+            CheckServiceImpl,
         ],
         providers = []
     }

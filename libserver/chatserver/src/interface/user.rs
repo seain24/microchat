@@ -5,7 +5,7 @@ use shaku::HasComponent;
 use validator::Validate;
 
 use crate::base::response::{Error, Reply, Response};
-use crate::components::get_service_factory;
+use crate::service;
 use crate::service::user::{IUserService, SignInRequest, SignUpRequest, UserInfo};
 
 #[derive(Debug, Serialize)]
@@ -25,23 +25,25 @@ async fn sign_up(body: web::Json<SignUpRequest>) -> Reply<SignUpReply> {
     let req = body.into_inner();
     if let Err(err) = req.validate() {
         for (_, v) in err.field_errors() {
-            if !v.is_empty() {
-                return Err(Error::param_invalid(v.first().unwrap().code.as_ref()));
+            if v.is_empty() {
+                continue;
             }
+
+            if let Some(msg) = v.first().unwrap().message.as_ref() {
+                return Err(Error::ParamInvalid(msg.to_string()));
+            }
+            return Err(Error::ParamInvalid("参数不合法".to_string()));
         }
     }
 
-    let modules = get_service_factory().map_err(|err| {
-        tracing::error!("user signed up failed, {err:#}");
-        Error::internal_server_error("用户注册失败")
-    })?;
+    let modules = service::service_factory()?;
     let user_service: &dyn IUserService = modules.resolve_ref();
     let user_info = user_service.sign_up(req).await.map_err(|err| {
         tracing::error!("{err:#}");
-        Error::internal_server_error("用户注册失败")
+        Error::InternalServerError
     })?;
     let reply = SignUpReply { user: user_info };
-    Ok(Response::new(Some(reply), None))
+    Ok(Response::ok(reply))
 }
 
 #[post("/signin")]
@@ -50,42 +52,40 @@ async fn sign_in(body: web::Json<SignInRequest>) -> Reply<SignInReply> {
     let req = body.into_inner();
     if let Err(err) = req.validate() {
         for (_, v) in err.field_errors() {
-            if !v.is_empty() {
-                return Err(Error::param_invalid(v.first().unwrap().code.as_ref()));
+            if v.is_empty() {
+                continue;
             }
+
+            if let Some(msg) = v.first().unwrap().message.as_ref() {
+                return Err(Error::ParamInvalid(msg.to_string()));
+            }
+            return Err(Error::ParamInvalid("参数不合法".to_string()));
         }
     }
 
-    let modules = get_service_factory().map_err(|err| {
-        tracing::error!("user signed in failed, {err:#}");
-        Error::internal_server_error("登录失败")
-    })?;
+    let modules = service::service_factory()?;
     let user_service: &dyn IUserService = modules.resolve_ref();
     user_service.sign_in(req).await.map_err(|err| {
         tracing::error!("{err:#}");
-        Error::internal_server_error("登录失败")
+        Error::InternalServerError
     })?;
 
-    Ok(Response::new(Some(SignInReply::default()), Some("登录成功")))
+    Ok(Response::ok(SignInReply::default()))
 }
 
 #[get("/signout/{user_id}")]
 async fn sign_out(user_id: web::Path<String>) -> Reply<SignOutReply> {
     if user_id.is_empty() {
-        return Err(Error::param_invalid("用户id不能为空"));
+        return Err(Error::ParamInvalid("用户名不能为空".to_string()));
     }
-
-    let modules = get_service_factory().map_err(|err| {
-        tracing::error!("user signed out failed, {err:#}");
-        Error::internal_server_error("退出帐号失败")
-    })?;
+    let modules = service::service_factory()?;
     let user_service: &dyn IUserService = modules.resolve_ref();
     user_service.sign_out(&user_id.into_inner()).await.map_err(|err| {
         tracing::error!("{err:#}");
-        Error::internal_server_error("退出帐号失败")
+        Error::InternalServerError
     })?;
 
-    Ok(Response::new(Some(SignOutReply::default()), Some("退出帐号成功")))
+    Ok(Response::ok(SignOutReply::default()))
 }
 
 pub fn config(cfg: &mut ServiceConfig) {

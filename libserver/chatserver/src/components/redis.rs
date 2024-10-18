@@ -1,6 +1,4 @@
 use std::sync::Arc;
-
-use async_trait::async_trait;
 use fred::prelude::*;
 use fred::types::RespVersion;
 use shaku::{Component, Interface};
