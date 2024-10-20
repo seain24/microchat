@@ -18,7 +18,7 @@ struct Args {
 
 #[get("/")]
 async fn index() -> HttpResponse {
-    HttpResponse::Ok().body("welcome to mircr-chat server!")
+    HttpResponse::Ok().body("welcome to mircr-chat lechat-server!")
 }
 
 #[actix_web::main]
@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
     let cfg_ = cfg.clone();
     let log_cleaner = base::log::init_logger(&cfg)?;
     let addr = format!("{}:{}", cfg.http.ip, cfg.http.port);
-    tracing::info!("mirco-chat server starts running on {}", addr);
+    tracing::info!("mirco-chat lechat-server starts running on {}", addr);
 
     // database connection
     // let conn = base::singleton::db::DbPool::get_instance(cfg_.clone()).await?;
@@ -46,7 +46,6 @@ async fn main() -> Result<()> {
             // .app_data(app_state.clone())
             .service(index)
             .configure(|cfg| {
-                interface::api::config(cfg);
                 interface::user::config(cfg);
             })
     })

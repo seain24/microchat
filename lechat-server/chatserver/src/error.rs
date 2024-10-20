@@ -6,7 +6,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub enum Error {
     #[error("parse config file failed, {0}")]
     ConfigError(String),
-    #[error("server start failed, {0}")]
+    #[error("lechat-server start failed, {0}")]
     ServerError(String),
     #[error("path is invalid")]
     PathInvalid,

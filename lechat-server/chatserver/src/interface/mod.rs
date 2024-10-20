@@ -2,7 +2,6 @@ use anyhow::Context;
 
 use crate::base::response::Result;
 
-pub mod api;
 pub mod user;
 
 pub trait Validate {

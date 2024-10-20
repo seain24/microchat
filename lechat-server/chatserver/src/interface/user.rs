@@ -19,6 +19,10 @@ pub struct SignInReply;
 #[derive(Debug, Default, Serialize)]
 pub struct SignOutReply;
 
+pub fn config(cfg: &mut ServiceConfig) {
+    cfg.service(web::scope("/user").service(sign_up).service(sign_in).service(sign_out));
+}
+
 #[post("/signup")]
 async fn sign_up(body: web::Json<SignUpRequest>) -> Reply<SignUpReply> {
     // 校验参数
@@ -88,6 +92,6 @@ async fn sign_out(user_id: web::Path<String>) -> Reply<SignOutReply> {
     Ok(Response::ok(SignOutReply::default()))
 }
 
-pub fn config(cfg: &mut ServiceConfig) {
-    cfg.service(web::scope("/user").service(sign_up).service(sign_in).service(sign_out));
-}
+// async fn find_friend(cond: web::Json<FindFriendRequest>) -> Reply<> {
+//
+// }

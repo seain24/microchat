@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["chatserver", "fileserver", "imgserver", "library"]
+members = ["chat", "file", "imgserver", "library"]
 
 [workspace.dependencies]
 actix = "0.13.5"

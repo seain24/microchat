@@ -81,7 +81,7 @@ impl<T: Serialize> Responder for Response<T> {
 /// 用户未注册
 #[derive(Debug, Error)]
 pub enum Error {
-    #[error("internal server error")]
+    #[error("internal lechat-server error")]
     InternalServerError,
     #[error("{0}")]
     ParamInvalid(String),

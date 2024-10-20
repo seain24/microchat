@@ -14,7 +14,7 @@ http:
 log:
   level: info
   filepath: ./logs
-  filename: chatserver.log
+  filename: chat.log
 
 # database config
 database:
