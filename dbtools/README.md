@@ -43,5 +43,5 @@
   
 ## Generate database
 - Local
-    - DATABASE_URL=mysql://root:123456@127.0.0.1:3306/microchat cargo run -- up
-    - ./target/debug/dbtools -u 'mysql://root:123456@127.0.0.1:3306/microchat' up
+    - DATABASE_URL=mysql://root:123456@127.0.0.1:3306/lechat cargo run -- up
+    - ./target/debug/dbtools -u 'mysql://root:123456@127.0.0.1:3306/lechat' up

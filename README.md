@@ -51,7 +51,7 @@ cargo install sea-orm-cli=0.12.12
 4. 生成orm-mapping
 
 ```shell
-sea-orm-cli generate entity -u mysql://root:123456@127.0.0.1:3306/microchat -o src/data/entity/microchat
+sea-orm-cli generate entity -u mysql://root:123456@127.0.0.1:3306/LeChat -o src/data/entity/LeChat
 ```
 
 ### 二、功能实现
